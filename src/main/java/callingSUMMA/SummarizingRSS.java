@@ -53,20 +53,12 @@ public class SummarizingRSS {
     public static final String elConfidencial="https://rss.elconfidencial.com/mundo/";
    
     public static String newsFeedName;
-    
-    
-    
+
     public static void main(String[] args) {
-        
-        
-        
         rssSite=laVanguardia;
         newsFeedName="La_Vanguardia";
         try {
-         
 
-           
-            
             URL url;
             XmlReader reader = null;
             Document doc;
