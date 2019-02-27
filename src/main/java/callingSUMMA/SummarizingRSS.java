@@ -46,16 +46,14 @@ public class SummarizingRSS {
     public static CorpusController application;
     public static String rssSite;
    
-    public static final String laVanguardia= "https://www.lavanguardia.com/mvc/feed/rss/home";
-    public static final String elPais="http://ep00.epimg.net/rss/tags/ultimas_noticias.xml";
-    public static final String bbc="http://feeds.bbci.co.uk/news/rss.xml?edition=int";
-    public static final String theGuardian="https://www.theguardian.com/world/rss";
-    public static final String elConfidencial="https://rss.elconfidencial.com/mundo/";
+
+    public static final String elPais="http://ep00.epimg.net/rss/elpais/portada.xml";
+
    
     public static String newsFeedName;
 
     public static void main(String[] args) {
-        rssSite=laVanguardia;
+        rssSite=elPais;
         newsFeedName="El_Pais";
         try {
 
@@ -65,9 +63,8 @@ public class SummarizingRSS {
             Corpus corpus;
             
             OutputStreamWriter osw;
-         //   File fout=new File("these_are_the_news_australia.html");
-             File fout=new File("."+File.separator+"output"+File.separator+
-                     "ultimas_noticias_"+newsFeedName+".html");
+
+            File fout = new File("./src/main/output/NoticiasElpais.html");
             String header="<!DOCTYPE html>\n" +
                     "<head>"+
                     "<meta charset=\"UTF-8\">"+
@@ -92,11 +89,13 @@ public class SummarizingRSS {
 
                 if(Gate.getGateHome() == null)
                     //Gate.setGateHome(new File("C:\\Users\\u124275\\Desktop\\gate-8.0-build4825-BIN"));
-                    Gate.setGateHome(new File(USER_HOME_DIRECTORY + "/GATE_Developer_8.0"));
+                    //Gate.setGateHome(new File(USER_HOME_DIRECTORY + "/GATE_Developer_8.0"));
+                    Gate.setGateHome(new File("D:\\Program Files\\GATE_Developer_8.0"));
 
                 if(Gate.getPluginsHome() == null)
                     //Gate.setPluginsHome(new File("C:\\Users\\u124275\\Desktop\\gate-8.0-build4825-BIN\\plugins"));
-                    Gate.setPluginsHome(new File(USER_HOME_DIRECTORY + "/GATE_Developer_8.0/plugins"));
+                    //Gate.setPluginsHome(new File(USER_HOME_DIRECTORY + "/GATE_Developer_8.0/plugins"));
+                    Gate.setPluginsHome(new File("D:\\Program Files\\GATE_Developer_8.0\\plugins"));
 
                 Gate.init();
                 
@@ -164,11 +163,6 @@ public class SummarizingRSS {
                 }
                 
                 osw.close();
-                      
-                
-                
-                
-                
                 
                 
                 
