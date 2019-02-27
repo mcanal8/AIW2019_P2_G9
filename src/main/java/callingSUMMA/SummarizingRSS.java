@@ -56,7 +56,7 @@ public class SummarizingRSS {
 
     public static void main(String[] args) {
         rssSite=laVanguardia;
-        newsFeedName="La_Vanguardia";
+        newsFeedName="El_Pais";
         try {
 
             URL url;

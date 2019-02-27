@@ -10,6 +10,8 @@ package utils;
 import gate.Factory;
 import gate.Gate;
 import gate.util.GateException;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,9 +25,11 @@ import org.jsoup.select.Elements;
  * @author UPF
  */
 public class SimpleHTMLExtractor {
-    
-    
-       public static String extractFromElMundo(String url) throws IOException {
+
+    private static final String USER_PROJECT_DIRECTORY = System.getProperty("user.dir");
+    private static final String USER_HOME_DIRECTORY = System.getProperty("user.home");
+
+       public static String extractFromDiarioFacha(String url) throws IOException {
         String text="";
         Document doc;
         doc = (Document) Jsoup.connect(url).get();
@@ -48,18 +52,36 @@ public class SimpleHTMLExtractor {
         return text;
     }
     
-    public static void main(String[] args) throws IOException  {
+    public static String callGATE(String link) throws IOException  {
         
-      String text=extractFromElMundo("http://www.elmundo.es/internacional/2017/11/15/5a0c423b268e3eeb718b45ca.html");
+      String text=extractFromDiarioFacha(link);
+
+
+      String summary = "";
       try {
+
+          if(Gate.getGateHome() == null) {
+              //Gate.setGateHome(new File("C:\\Users\\u124275\\Desktop\\gate-8.0-build4825-BIN"));
+              //Gate.setGateHome(new File(USER_HOME_DIRECTORY + "/GATE_Developer_8.0"));
+              Gate.setGateHome(new File("D:\\Program Files\\GATE_Developer_8.0"));
+          }
+
+          if(Gate.getPluginsHome() == null) {
+              //Gate.setPluginsHome(new File("C:\\Users\\u124275\\Desktop\\gate-8.0-build4825-BIN\\plugins"));
+              //Gate.setPluginsHome(new File(USER_HOME_DIRECTORY + "/GATE_Developer_8.0/plugins"));
+              Gate.setPluginsHome(new File("D:\\Program Files\\GATE_Developer_8.0\\plugins"));
+          }
           
           Gate.init();
           gate.Document doc;
           doc=Factory.newDocument(text);
           System.out.println(doc.getContent());
+          summary = doc.getContent().toString();
       } catch(GateException ge) {
           ge.printStackTrace();
-      }    
+      }
+
+        return summary;
                
         
       

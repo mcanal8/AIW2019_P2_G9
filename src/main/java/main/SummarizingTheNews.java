@@ -1,9 +1,9 @@
 package main;
 
 import model.New;
+import utils.SimpleHTMLExtractor;
 
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
 
 import static rssutils.RssUtils.extractLinks;
 
@@ -17,8 +17,15 @@ public class SummarizingTheNews {
         org.apache.log4j.BasicConfigurator.configure();
 
         log.info("Starting engine...");
-        Map<String, List<New>> news = extractLinks(URL_EL_PAIS_PORTADA);
+        ArrayList<New> news = extractLinks(URL_EL_PAIS_PORTADA);
         log.info("Extracted links from El_Pais_Portada...");
+
+        for(New currentNew : news) {
+            String content = "";
+            content = SimpleHTMLExtractor.callGATE(currentNew.getLink());
+
+            currentNew.setContent(content);
+        }
 
         log.info("END");
 
