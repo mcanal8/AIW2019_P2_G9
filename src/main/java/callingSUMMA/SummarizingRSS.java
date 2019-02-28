@@ -90,12 +90,12 @@ public class SummarizingRSS {
                 if(Gate.getGateHome() == null)
                     //Gate.setGateHome(new File("C:\\Users\\u124275\\Desktop\\gate-8.0-build4825-BIN"));
                     //Gate.setGateHome(new File(USER_HOME_DIRECTORY + "/GATE_Developer_8.0"));
-                    Gate.setGateHome(new File("D:\\Program Files\\GATE_Developer_8.0"));
+                    Gate.setGateHome(new File("C:\\Program Files\\GATE_Developer_8.0"));
 
                 if(Gate.getPluginsHome() == null)
                     //Gate.setPluginsHome(new File("C:\\Users\\u124275\\Desktop\\gate-8.0-build4825-BIN\\plugins"));
                     //Gate.setPluginsHome(new File(USER_HOME_DIRECTORY + "/GATE_Developer_8.0/plugins"));
-                    Gate.setPluginsHome(new File("D:\\Program Files\\GATE_Developer_8.0\\plugins"));
+                    Gate.setPluginsHome(new File("C:\\Program Files\\GATE_Developer_8.0\\plugins"));
 
                 Gate.init();
                 
