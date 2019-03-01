@@ -17,8 +17,10 @@ import gate.persist.PersistenceException;
 import gate.util.GateException;
 import gate.util.OffsetComparator;
 import gate.util.persistence.PersistenceManager;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -65,7 +67,23 @@ public class SummarizingRSS {
             OutputStreamWriter osw;
 
             File fout = new File("./src/main/output/NoticiasElpais.html");
-            String header="<!DOCTYPE html>\n" +
+            BufferedReader template = new BufferedReader(new FileReader("./src/main/resources/news.html"));
+            
+            String content = "";
+            
+            String str;
+               while ((str = template.readLine()) != null) {
+                    content = content + (str);
+            }
+            
+               
+               System.out.println("AAAA");
+               System.out.println(content);
+           
+            
+            String header=
+                    
+                    "<!DOCTYPE html>\n" +
                     "<head>"+
                     "<meta charset=\"UTF-8\">"+
                     "</head>"+
@@ -77,6 +95,17 @@ public class SummarizingRSS {
             String footer="</body>\n" +
                     "</html>";
             FileOutputStream writer=new FileOutputStream(fout);
+            
+            /*BufferedReader in = new BufferedReader(new FileReader("mypage.html"));
+               String str;
+               while ((str = in.readLine()) != null) {
+                    contentBuilder.append(str);
+                }
+                in.close();
+            } catch (IOException e) {
+            }*/
+            
+            
             osw=new OutputStreamWriter(writer,"utf-8");
       
             osw.append(header+"\n");
@@ -112,7 +141,7 @@ public class SummarizingRSS {
                 
                 SyndFeed feed = new SyndFeedInput().build(reader);
                 
-                System.out.println("Feed Title: "+ feed.getTitle());
+                //System.out.println("Feed Title: "+ feed.getTitle());
                 //  The corpus to store the document
                 corpus=Factory.newCorpus("");
                 int count=0;
@@ -127,8 +156,8 @@ public class SummarizingRSS {
                     link=entry.getLink();
                     
                     
-                    System.out.println(title);
-                    System.out.println(link);
+                    //System.out.println(title);
+                    //System.out.println(link);
                     doc=Factory.newDocument(new URL(link),"utf-8");
                   //  System.out.println(doc.getContent().toString());
                      // !!!!!!! //
@@ -146,9 +175,9 @@ public class SummarizingRSS {
                     corpus.add(cleanDocument);
                     application.setCorpus(corpus);
                     application.execute();
-                    System.out.println("*** SUMMARY ***");
+                    //System.out.println("*** SUMMARY ***");
                     System.out.println(getSummary(cleanDocument));
-                    System.out.println("***************");
+                    //System.out.println("***************");
                     
                     osw.append("<h2>"+title+"</h2>"+"\n");
                     

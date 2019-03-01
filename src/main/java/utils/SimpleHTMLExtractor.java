@@ -7,12 +7,20 @@ package utils;
  */
 
 
+import gate.Annotation;
+import gate.AnnotationSet;
+import gate.Corpus;
+import gate.CorpusController;
 import gate.Factory;
 import gate.Gate;
 import gate.util.GateException;
+import gate.util.OffsetComparator;
+import gate.util.persistence.PersistenceManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jsoup.Jsoup;
@@ -28,10 +36,13 @@ public class SimpleHTMLExtractor {
 
     private static final String USER_PROJECT_DIRECTORY = System.getProperty("user.dir");
     private static final String USER_HOME_DIRECTORY = System.getProperty("user.home");
+    public static CorpusController application;
+    public static String gappToTest="MySUMMARIZER.gapp";
 
        public static String extractFromDiarioFacha(String url) throws IOException {
         String text="";
         Document doc;
+        Corpus corpus;
         doc = (Document) Jsoup.connect(url).get();
         String title;
         System.out.println(doc.title());
@@ -73,10 +84,22 @@ public class SimpleHTMLExtractor {
           }
           
           Gate.init();
+          
+          application =
+                        (CorpusController)
+                        PersistenceManager.loadObjectFromFile(new
+                             File("."+File.separator+"gapps"+File.separator+gappToTest));
           gate.Document doc;
           doc=Factory.newDocument(text);
-          System.out.println(doc.getContent());
-          summary = doc.getContent().toString();
+          gate.Corpus corpus;
+          corpus=Factory.newCorpus("");
+          corpus.add(doc);
+          application.setCorpus(corpus);
+          application.execute();
+          
+          
+          summary = getSummary(doc);
+
       } catch(GateException ge) {
           ge.printStackTrace();
       }
@@ -86,6 +109,26 @@ public class SimpleHTMLExtractor {
         
       
     }
+    
+    public static String getSummary(gate.Document doc) {
+        String summary="";
+        String dc=doc.getContent().toString();
+        AnnotationSet sentences=doc.getAnnotations("EXTRACT").get("Sentence");
+        // sort the annotations
+        Annotation sentence;
+        Long start, end;
+        ArrayList<Annotation> sentList=new ArrayList(sentences);
+        Collections.sort(sentList,new OffsetComparator());
+        for(int s=0;s<sentList.size();s++) {
+            sentence=sentList.get(s);
+            start=sentence.getStartNode().getOffset();
+            end  =sentence.getEndNode().getOffset();
+            summary=summary+dc.substring(start.intValue(), end.intValue())+"\n";
+        }
+        
+        return summary;
+    } 
+    
 }
 
     
