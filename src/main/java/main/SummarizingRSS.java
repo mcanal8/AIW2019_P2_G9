@@ -55,7 +55,8 @@ public class SummarizingRSS {
             callingSUMMA.getSummary(currentNew);
        }
 
-        printer(news);
+       //printer(news);
+       log.info("Creating website...");
        webCreator.createWebsite(news, newsFeedName);
        log.info("Program ended execution");
 
