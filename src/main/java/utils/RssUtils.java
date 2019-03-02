@@ -1,4 +1,4 @@
-package rssutils;
+package utils;
 
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;

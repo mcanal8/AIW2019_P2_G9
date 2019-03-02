@@ -7,10 +7,12 @@ package main;
 import gate.*;
 import model.New;
 import callingSUMMA.callingSUMMA;
+import utils.webCreator;
+
 import java.util.List;
 
-import static rssutils.RssUtils.extractFromDiarioFacha;
-import static rssutils.RssUtils.extractLinks;
+import static utils.RssUtils.extractFromDiarioFacha;
+import static utils.RssUtils.extractLinks;
 
 /**
  *
@@ -54,6 +56,7 @@ public class SummarizingRSS {
        }
 
         printer(news);
+       webCreator.createWebsite(news, newsFeedName);
        log.info("Program ended execution");
 
    }
