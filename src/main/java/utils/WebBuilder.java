@@ -38,10 +38,17 @@ public class WebBuilder {
 
         for(New currentNew : news){
             String formattedNew = "    <div class=\"w3-third w3-container w3-margin-bottom\">\n" +
-                    "      <img src=\"/w3images/mountains.jpg\" alt=\"Norway\" style=\"width:100%\" class=\"w3-hover-opacity\">\n" +
                     "      <div class=\"w3-container w3-white\">";
-            formattedNew = formattedNew + "<p><b>" + currentNew.getTitle() + "</b></p>";
-            formattedNew = formattedNew + "<p>" + currentNew.getSummary() + "</p>\n" +
+            formattedNew = formattedNew + "<p><b><a href=" + currentNew.getLink() + ">" + currentNew.getTitle() + "</a></b></p>";
+            formattedNew = formattedNew + "<i>Escrito por: " + currentNew.getAuthor() + " el " + currentNew.getDate() + "</i>";
+            formattedNew = formattedNew + "<p>" + currentNew.getSummary() + "</p>\n";
+            formattedNew = formattedNew + "<p>Archivado en: ";
+            Object[] categories = currentNew.getCategories().toArray();
+
+            for(Object str : categories){
+                formattedNew = formattedNew + str.toString() + "  ";
+            }
+            formattedNew = formattedNew + "</p>" +
                     "      </div>\n" +
                     "    </div>";
             formattedNews.add(formattedNew);

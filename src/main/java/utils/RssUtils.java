@@ -48,6 +48,10 @@ public class RssUtils {
                 New customNew = new New();
                 customNew.setTitle(entry.getTitle());
                 customNew.setLink(entry.getLink());
+                customNew.setAuthor(entry.getAuthor());
+                customNew.setDate(entry.getPublishedDate().toString());
+                customNew.setCategories(entry.getCategories());
+
 
                 String content = extractNewContentFromUrl(entry.getLink());
                 customNew.setContent(content);
