@@ -15,6 +15,11 @@ public class WebBuilder {
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WebBuilder.class);
     private static final String WEBSITE = "voidWebsite.html";
 
+    /**
+     * It creates a website given a list of news and a feed name
+     * @param news: all the news we want to include in our website
+     * @param newsFeedName: the title
+     */
     public static void createWebsite(List<New> news, String newsFeedName){
         List<String> formattedNews = formatNews(news);
         String content = getContentFromFile(getResourceFolderPath(WEBSITE));
@@ -22,6 +27,11 @@ public class WebBuilder {
         buildWebsite(formattedNews, newsFeedName, content);
     }
 
+    /**
+     * This method formats the website given a list of news
+     * @param news: the list of news given
+     * @return: the format string list including the news
+     */
     private static List<String> formatNews(List<New> news){
 
         List<String> formattedNews = new ArrayList<String>();
@@ -40,6 +50,12 @@ public class WebBuilder {
         return formattedNews;
     }
 
+    /**
+     * It builds the website with the formattedNews, the feed name and the content
+     * @param formattedNews: news formatted correctly
+     * @param newsFeedName: the feed name
+     * @param content: the content of the html
+     */
     private static void buildWebsite(List<String> formattedNews, String newsFeedName, String content){
 
         String finalWebPage;

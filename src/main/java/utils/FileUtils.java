@@ -9,12 +9,23 @@ class FileUtils {
 
     private FileUtils(){}
 
+    /**
+     * This method returns a file which is placed in the resource folder of the project
+     * @param resource: the file path we want to obtain
+     * @return the file url
+     */
     static String getResourceFolderPath(String resource) {
         ClassLoader loader = Thread.currentThread().getContextClassLoader();
         URL url = loader.getResource(resource);
         assert url != null;
         return url.getFile();
     }
+
+    /**
+     * It extracts the content from a file
+     * @param filePath: file path
+     * @return the content extracted
+     */
 
     static String getContentFromFile(String filePath) {
 

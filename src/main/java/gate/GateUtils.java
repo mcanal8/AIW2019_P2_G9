@@ -21,19 +21,31 @@ public class GateUtils {
 
     private GateUtils(){}
 
+    /**
+     * This method initializes the GATE app
+     * @param gappName: name of the gapp
+     * @throws IOException:
+     */
     public static void initializeGATE(String gappName) throws IOException  {
 
-      try {
-          checkGateConfig();
-          Gate.init();
-          application = (CorpusController) PersistenceManager.loadObjectFromFile(new File("."+File.separator+"gapps"+File.separator+gappName));
+        log.info("Configuring GATE environment...");
+        try {
+            checkGateConfig();
+            log.info("Initializing GATE application...");
+            Gate.init();
+            application = (CorpusController) PersistenceManager.loadObjectFromFile(new File("."+File.separator+"gapps"+File.separator+gappName));
 
-      } catch(GateException ge) {
-          log.error(ge.getMessage() != null ? ge.getMessage(): "Error initializing gate.");
-      }
+        } catch(GateException ge) {
+            log.error(ge.getMessage() != null ? ge.getMessage(): "Error initializing gate.");
+        }
     }
 
-    //Given a text makes a summary of it
+    /**
+     * This method extracts a summary of a given text
+     * It uses the application in order to extract summary sentences
+     * Finally, it joins all the summary sentences
+     * @param text: text we want to summary
+     */
     public static String getSummary(String text) {
 
         StringBuilder summary= new StringBuilder();
@@ -74,6 +86,10 @@ public class GateUtils {
         return null;
     }
 
+    /**
+     * This method set the Gate Home and plugins
+     * MODIFIABLE --> Please feel free to change the path in order to run the application with your current environment
+     */
     private static void checkGateConfig() {
 
         if(Gate.getGateHome() == null) {

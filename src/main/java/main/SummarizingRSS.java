@@ -20,6 +20,14 @@ public class SummarizingRSS {
     private static final String RSS_URL ="http://ep00.epimg.net/rss/elpais/portada.xml";
     private static final String NEWS_FEED_NAME = "El Pais";
 
+    /**
+     * Main method that execute our application
+     * First of all, it extract the news given a rss url
+     * (title, link, content and summary)
+     * Finally, it creates a html file with all the summary news
+     * @param args: main args
+     * @throws Exception: main exception
+     */
    public static void main(String[] args) throws Exception {
 
        org.apache.log4j.BasicConfigurator.configure();
@@ -32,6 +40,5 @@ public class SummarizingRSS {
        log.info("Creating website...");
        WebBuilder.createWebsite(news, NEWS_FEED_NAME);
        log.info("Program ended execution");
-
    }
 }

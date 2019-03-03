@@ -21,7 +21,18 @@ public class RssUtils {
 
     private RssUtils(){}
 
-    //Given a RSS link returns a list of news with the title and the link of each piece of news
+    /**
+     * Given a RSS link it:
+     * 1) reads the news from the rssSite
+     * 2) gets the title and link
+     * 3) gets the content of the new (without summary)
+     * 4) gets the summary of the content
+     * and finally, returns a list of news with
+     * the title, the link, the content and the summary of each piece of news
+     * @param rssSite: the rss url
+     * @return a list of news
+     * @throws Exception if any error is given
+     */
     public static List<New> extractNews(String rssSite) throws Exception{
 
         List<New> news = new ArrayList<New>();
@@ -51,6 +62,12 @@ public class RssUtils {
         return news;
     }
 
+    /**
+     * This method extracts the useful HTML content from a url containing a new.
+     * @param url: url path where we want to extract the new content
+     * @return it returns the content parsed and clean
+     * @throws IOException if any error is given
+     */
     private static String extractNewContentFromUrl(String url) throws IOException {
 
         StringBuilder text = new StringBuilder();
