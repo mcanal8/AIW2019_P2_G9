@@ -4,7 +4,6 @@ import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
-import gate.Corpus;
 import model.New;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -13,18 +12,19 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static gate.GateUtils.getSummary;
 
 public class RssUtils {
 
     private RssUtils(){}
 
     //Given a RSS link returns a list of news with the title and the link of each piece of news
-    public static List <New> extractLinks(String rssSite) throws Exception{
-
+    public static List<New> extractNews(String rssSite) throws Exception{
 
         List<New> news = new ArrayList<New>();
-
         URL url  = new URL(rssSite);
         XmlReader reader = null;
 
@@ -32,44 +32,40 @@ public class RssUtils {
             reader = new XmlReader(url);
             SyndFeed feed = new SyndFeedInput().build(reader);
 
-
             for (Object o : feed.getEntries()) {
                 SyndEntry entry = (SyndEntry) o;
-                New customNew = new New(entry.getTitle(), entry.getLink());
+                New customNew = new New();
+                customNew.setTitle(entry.getTitle());
+                customNew.setLink(entry.getLink());
+
+                String content = extractNewContentFromUrl(entry.getLink());
+                customNew.setContent(content);
+                customNew.setSummary(getSummary(content));
                 news.add(customNew);
             }
-
-            //result.put("news", news);
         } finally {
             if (reader != null)
                 reader.close();
         }
-        //log.info("***********************");
+
         return news;
     }
 
-    //Given a piece of news link extracts the content
-    public static String extractFromDiarioFacha(String url) throws IOException {
-        String text="";
+    private static String extractNewContentFromUrl(String url) throws IOException {
+
+        StringBuilder text = new StringBuilder();
         Document doc;
-        Corpus corpus;
-        doc = (Document) Jsoup.connect(url).get();
-        String title;
-        //System.out.println(doc.title());
-        Elements els;
-
-        els=doc.getElementsByTag("div");
+        doc = Jsoup.connect(url).get();
+        Elements elements = doc.getElementsByTag("div");
         String txt;
-        for(Element ele: els) {
-            if(ele.hasAttr("itemprop")) {
-                if(ele.attributes().get("itemprop").equals("articleBody")) {
-                    txt=ele.text();
 
-                    text=text+ " " + txt;
-                }
+        for(Element ele: elements) {
+            if(ele.hasAttr("itemprop") && ele.attributes().get("itemprop").equals("articleBody")) {
+                txt=ele.text();
+                text.append(" ").append(txt);
             }
 
         }
-        return text;
+        return text.toString();
     }
 }

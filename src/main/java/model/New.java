@@ -7,11 +7,13 @@ public class New {
     private String content;
     private String summary;
 
-    public New(String title, String link) {
+    public New(){}
+
+    public New(String title, String link, String content, String summary) {
         this.title = title;
         this.link = link;
-        this.content = "";
-        this.summary = "";
+        this.content = content;
+        this.summary = summary;
     }
 
     public String getTitle() {
@@ -22,9 +24,13 @@ public class New {
         this.title = title;
     }
 
-    public String getLink() { return link; }
+    public String getLink() {
+        return link;
+    }
 
-    public void setLink(String link) {this.link = link; }
+    public void setLink(String link) {
+        this.link = link;
+    }
 
     public String getContent() {
         return content;
@@ -34,7 +40,11 @@ public class New {
         this.content = content;
     }
 
-    public String getSummary(){ return this.summary; }
+    public String getSummary() {
+        return summary;
+    }
 
-    public void setSummary(String summary) { this.summary = summary; }
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
 }
