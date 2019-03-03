@@ -37,21 +37,19 @@ public class WebBuilder {
         List<String> formattedNews = new ArrayList<String>();
 
         for(New currentNew : news){
-            String formattedNew = "    <div class=\"w3-third w3-container w3-margin-bottom\">\n" +
-                    "      <div class=\"w3-container w3-white\">";
-            formattedNew = formattedNew + "<p><b><a href=" + currentNew.getLink() + ">" + currentNew.getTitle() + "</a></b></p>";
-            formattedNew = formattedNew + "<i>Escrito por: " + currentNew.getAuthor() + " el " + currentNew.getDate() + "</i>";
-            formattedNew = formattedNew + "<p>" + currentNew.getSummary() + "</p>\n";
-            formattedNew = formattedNew + "<p>Archivado en: ";
+            StringBuilder formattedNew = new StringBuilder("    <div class=\"w3-third w3-container w3-margin-bottom\">\n" +
+                    "      <div class=\"w3-container w3-white\">");
+            formattedNew.append("<p><b><a href=").append(currentNew.getLink()).append(">").append(currentNew.getTitle()).append("</a></b></p>");
+            formattedNew.append("<i>Escrito por: ").append(currentNew.getAuthor()).append(" el ").append(currentNew.getDate()).append("</i>");
+            formattedNew.append("<p>").append(currentNew.getSummary()).append("</p>\n");
+            formattedNew.append("<p><b>Temas relacionados:</b> ");
             Object[] categories = currentNew.getCategories().toArray();
 
             for(Object str : categories){
-                formattedNew = formattedNew + str.toString() + "  ";
+                formattedNew.append(str.toString()).append("  ");
             }
-            formattedNew = formattedNew + "</p>" +
-                    "      </div>\n" +
-                    "    </div>";
-            formattedNews.add(formattedNew);
+            formattedNew.append("</p>").append("      </div>\n").append("    </div>");
+            formattedNews.add(formattedNew.toString());
         }
 
         return formattedNews;

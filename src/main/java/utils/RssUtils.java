@@ -1,5 +1,6 @@
 package utils;
 
+import com.sun.syndication.feed.synd.SyndCategory;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.SyndFeedInput;
@@ -50,8 +51,7 @@ public class RssUtils {
                 customNew.setLink(entry.getLink());
                 customNew.setAuthor(entry.getAuthor());
                 customNew.setDate(entry.getPublishedDate().toString());
-                customNew.setCategories(entry.getCategories());
-
+                customNew.setCategories(extractCategories(entry.getCategories()));
 
                 String content = extractNewContentFromUrl(entry.getLink());
                 customNew.setContent(content);
@@ -64,6 +64,15 @@ public class RssUtils {
         }
 
         return news;
+    }
+
+    private static List<String> extractCategories(List<SyndCategory> categoriesStuff) {
+        List<String> categories = new ArrayList<String>();
+
+        for (SyndCategory category : categoriesStuff) {
+            categories.add(category.getName());
+        }
+        return categories;
     }
 
     /**
